@@ -45,9 +45,8 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
         tv_dateAndChars.setSelected(true);
         // ..............................
 
-        Date currentDate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        date = dateFormat.format(currentDate);
+        // updating the date.
+        tv_dateAndChars.setText(getCurrentDate());
 
         boolean isAdd = getIntent().getIntExtra(MainActivity.KEY_EDIT_OR_ADD, 0) == 0;
         // checking if its edit mode, if it is then change the fields.
@@ -64,6 +63,7 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                tv_dateAndChars.setText(getCurrentDate());
                 if (isAdd) {
                     // checking if the fields are empty if it does, then do nothing until he fill them.
                     if (et_description.getText().toString().trim().isEmpty() || et_title.getText().toString().trim().isEmpty() || tv_dateAndChars.getText().toString().trim().isEmpty()) {
@@ -93,30 +93,17 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error while editing the note", Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
         });
 
-        et_description.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                updateDateAndCharTextView(s.length());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
     }
 
-    private void updateDateAndCharTextView(int numChar) {
-        tv_dateAndChars.setText(date + " |Characters: " + numChar);
+    private String getCurrentDate() {
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        date = dateFormat.format(currentDate);
+        return date;
     }
 }
