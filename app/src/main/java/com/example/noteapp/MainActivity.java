@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // initializes apps widgets for future use.
-        tv_notesText = (TextView) findViewById(R.id.tv_notesText);
-        sv_notesSearcher = (SearchView) findViewById(R.id.sv_notesSearcher);
-        fab_addButton = (FloatingActionButton) findViewById(R.id.fab_addButton);
+        tv_notesText = findViewById(R.id.tv_notesText);
+        sv_notesSearcher = findViewById(R.id.sv_notesSearcher);
+        fab_addButton = findViewById(R.id.fab_addButton);
         dataBasehalper = new DataBasehalper(MainActivity.this);
         noteModelList = dataBasehalper.getAllNotes();
-        rv_notesHolder = (RecyclerView) findViewById(R.id.rv_notesHolder);
+        rv_notesHolder = findViewById(R.id.rv_notesHolder);
 
         // for making hint on the search view.
         sv_notesSearcher.setQueryHint("Search notes");
@@ -58,16 +58,20 @@ public class MainActivity extends AppCompatActivity {
         updateAdapter(noteModelList);
 
         // sets listeners for the items
+
+
         fab_addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // sends the client to activity where he will add notes.
                 Intent i = new Intent(MainActivity.this, AddOrEditNoteActivity.class);
+                // 0 means it's for adding a new note
                 i.putExtra(KEY_EDIT_OR_ADD, 0);
                 startActivity(i);
             }
         });
 
+        // set on text change listener to SearchView
         sv_notesSearcher.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -76,12 +80,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                // when text changes send it to searchNotesByTitle function
+                // and then update the adapter to show only the items the
+                // function returns
                 updateAdapter(dataBasehalper.searchNotesByTitle(newText));
                 return true;
             }
         });
     }
-
+    // function that gets list of notes and puts it into the adapter.
     private void updateAdapter(List<NoteModel> list) {
         //no instance
         adapter = new RecyclerViewNoteAdapter(list, MainActivity.this);

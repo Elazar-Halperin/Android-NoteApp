@@ -76,8 +76,7 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
 
                     boolean inserted = dataBasehalper.addNoteRow(createNoteModel);
                     if (inserted) {
-                        Intent i = new Intent(AddOrEditNoteActivity.this, MainActivity.class);
-                        startActivity(i);
+                        finish();
                     }
                 } else {
 
@@ -88,7 +87,7 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
 
                     boolean updated = dataBasehalper.updateNoteRow(createNoteModel);
                     if(updated) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(), "Error while editing the note", Toast.LENGTH_SHORT).show();
                     }
@@ -100,6 +99,8 @@ public class AddOrEditNoteActivity extends AppCompatActivity {
 
     }
 
+    // function to get the current date
+    // by using the format of the: 2020/02/07 18:34
     private String getCurrentDate() {
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

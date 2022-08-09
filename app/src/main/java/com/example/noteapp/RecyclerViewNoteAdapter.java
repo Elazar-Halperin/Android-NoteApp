@@ -101,12 +101,14 @@ public class RecyclerViewNoteAdapter extends RecyclerView.Adapter<RecyclerViewNo
                 }
             }
         });
-
+        // add click listener for editing
         noteViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), AddOrEditNoteActivity.class);
+                // code 1 means it's for editing
                 i.putExtra(MainActivity.KEY_EDIT_OR_ADD, 1);
+                // sending the note object
                 i.putExtra(MainActivity.KEY_NOTE_MODEL, noteModelList.get(position));
                 v.getContext().startActivity(i);
             }
@@ -119,6 +121,7 @@ public class RecyclerViewNoteAdapter extends RecyclerView.Adapter<RecyclerViewNo
         return noteModelList.size();
     }
 
+    // function to deleting a note.
     private void removeFromRecyclerView(int position) {
         noteModelList.remove(position);
         notifyItemRemoved(position);
