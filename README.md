@@ -5,4 +5,4 @@ Database: SQLite
 Features:
 Adding a note -
 
-<img src="images_and_gifs/AddNote.gif" width="450"></img>
+<img src="images_and_gifs/AddNote.gif" width="200"></img>
